@@ -1,0 +1,19 @@
+<form [formGroup]="senderForm" (ngSubmit)="onSubmit()">
+  <div>
+
+    
+    <label for="senderEmail">
+      Email
+    </label>
+    <input id="senderEmail" type="text" formControlName="senderEmail" />
+  </div>
+
+  <div>
+    <label for="receiverEmail">
+      Receiver Email
+    </label>
+    <input id="receiverEmail" type="text" formControlName="receiverEmail" />
+  </div>
+
+  <button class="button" type="submit">Send</button>
+</form>
