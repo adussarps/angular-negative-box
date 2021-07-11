@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgClass, NgStyle } from '@angular/common';
 import { FileUploader } from 'ng2-file-upload';
+import * as EXIF from 'exif-js';
 
 // const URL = '/api/';
 const URL = 'api';
@@ -16,6 +17,7 @@ export class FileUploaderComponent {
   hasAnotherDropZoneOver: boolean;
   response: string;
   file: File;
+  fileReader = new FileReader();
 
   constructor() {
     this.uploader = new FileUploader({
@@ -38,6 +40,19 @@ export class FileUploaderComponent {
     this.hasAnotherDropZoneOver = false;
 
     this.response = '';
+
+    this.uploader.onAfterAddingFile = file => {
+      console.log(file);
+      file._file.arrayBuffer().then(array => {
+        const data = EXIF.readFromBinaryFile(array);
+        if (data) {
+          console.log(data);
+          console.log(file.file.name);
+        } else {
+          console.log('failing here');
+        }
+      });
+    };
 
     this.uploader.response.subscribe(res => (this.response = res));
   }
